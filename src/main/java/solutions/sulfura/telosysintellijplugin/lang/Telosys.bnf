@@ -1,0 +1,25 @@
+{
+  parserClass="solutions.sulfura.telosysintellijplugin.lang.parser.TelosysParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Telosys"
+  psiImplClassSuffix="Impl"
+  psiPackage="solutions.sulfura.telosysintellijplugin.lang.parser"
+  psiImplPackage="solutions.sulfura.telosysintellijplugin.lang.parser.impl"
+
+  elementTypeHolderClass="solutions.sulfura.telosysintellijplugin.lang.parser.TelosysTypes"
+  elementTypeClass="solutions.sulfura.telosysintellijplugin.lang.psi.TelosysElementType"
+  tokenTypeClass="solutions.sulfura.telosysintellijplugin.lang.psi.TelosysTokenType"
+}
+
+telosys_file ::=  IGNORED* (comment IGNORED*)* (decorator IGNORED*)* entity IGNORED* (comment IGNORED*)*
+comment ::= line-comment | block-comment
+line-comment ::= "//" COMMENT_TEXT* EOL
+block-comment ::= "/*" COMMENT_TEXT*  "*/"
+entity ::= ENTITY_NAME IGNORED* "{" IGNORED* ((comment | attribute)+ IGNORED*)+ "}"
+decorator ::= annotation | tag
+attribute ::= ATTRIBUTE_NAME IGNORED* ":" IGNORED* ATTRIBUTE_TYPE IGNORED* "{" IGNORED* (decorator IGNORED* )* "}" IGNORED* ";"
+annotation ::= "@" ANNOTATION_NAME decorator-content?
+tag ::= "#" TAG_NAME decorator-content?
+decorator-content ::= "(" IGNORED* DECORATOR_VALUE IGNORED* ( "," IGNORED* DECORATOR_VALUE)* ")"

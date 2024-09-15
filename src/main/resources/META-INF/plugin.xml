@@ -24,6 +24,14 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-
+        <fileType
+                name="Telosys Dsl"
+                implementationClass="solutions.sulfura.telosysintellijplugin.lang.TelosysDslLanguageFileType"
+                fieldName="INSTANCE"
+                language="TelosysDsl"
+                extensions="entity"/>
+        <lang.parserDefinition
+                language="TelosysDsl"
+                implementationClass="solutions.sulfura.telosysintellijplugin.lang.TelosysParserDefinition"/>
     </extensions>
 </idea-plugin>
