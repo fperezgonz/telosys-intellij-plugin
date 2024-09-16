@@ -80,14 +80,14 @@ BLOCK_COMMENT, ENTITY, ENTITY_BODY, ATTRIBUTE, ATTRIBUTE_TYPE> {
 
     <ENTITY_BODY> {
 
-        {ELEMENT_NAME}        { logText(); yybegin(ATTRIBUTE); return ATTRIBUTE_NAME; }
+        {ELEMENT_NAME}        { logText(); pushCurrentState(); yybegin(ATTRIBUTE); return ATTRIBUTE_NAME; }
         {WHITE_SPACE}         { logText(); return IGNORED; }
         "}"                   { logText(); yybegin(popState()); return new TelosysElementType("}"); }
 
         <ATTRIBUTE> {
 
             {WHITE_SPACE}        { logText(); return IGNORED; }
-            ":"                  { logText(); pushCurrentState(); yybegin(ATTRIBUTE_TYPE); return new TelosysElementType(":");}
+            ":"                  { logText(); yybegin(ATTRIBUTE_TYPE); return new TelosysElementType(":");}
 
             <ATTRIBUTE_TYPE> {
 
@@ -124,7 +124,7 @@ BLOCK_COMMENT, ENTITY, ENTITY_BODY, ATTRIBUTE, ATTRIBUTE_TYPE> {
 
 <DECORATOR_CONTENT> {
     {WHITE_SPACE}           { logText(); return IGNORED; }
-    (\w|\.|\")+             { logText(); return DECORATOR_VALUE; }
+    (\".*\")|(\w+|\.)+      { logText(); return DECORATOR_VALUE; }
     ","                     { logText(); return new TelosysElementType(","); }
     ")"                     { logText(); yybegin(popState()); return new TelosysElementType(")"); }
 }
