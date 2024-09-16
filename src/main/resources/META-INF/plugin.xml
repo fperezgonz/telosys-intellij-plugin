@@ -33,5 +33,10 @@
         <lang.parserDefinition
                 language="TelosysDsl"
                 implementationClass="solutions.sulfura.telosysintellijplugin.lang.TelosysParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="TelosysDsl"
+                implementationClass="solutions.sulfura.telosysintellijplugin.lang.syntaxhighlighting.TelosysDslSyntaxHighlighterFactory"/>
+        <colorSettingsPage
+                implementation="solutions.sulfura.telosysintellijplugin.lang.syntaxhighlighting.TelosysColorSettingsPage"/>
     </extensions>
 </idea-plugin>

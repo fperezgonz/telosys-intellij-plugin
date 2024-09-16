@@ -51,6 +51,7 @@ ELEMENT_NAME=\w+
 %state ENTITY_BODY
 %state ATTRIBUTE
 %state ATTRIBUTE_TYPE
+%state POST_DECORATOR_NAME
 
 
 %%
@@ -62,9 +63,9 @@ ELEMENT_NAME=\w+
 
 }
 
-<YYINITIAL, ATTRIBUTE_TYPE> {
-    "@"                   { logText(); pushCurrentState(); yybegin(ANNOTATION); return new TelosysElementType("@"); }
-    "#"                   { logText(); pushCurrentState(); yybegin(TAG); return new TelosysElementType("#"); }
+<YYINITIAL, ATTRIBUTE_TYPE, POST_DECORATOR_NAME> {
+    "@"                   { logText(); pushCurrentState(); yybegin(ANNOTATION); return AT; }
+    "#"                   { logText(); pushCurrentState(); yybegin(TAG); return SHARP; }
 }
 
 <YYINITIAL, ANNOTATION, TAG, DECORATOR_CONTENT, LINE_COMMENT,
@@ -106,20 +107,17 @@ BLOCK_COMMENT, ENTITY, ENTITY_BODY, ATTRIBUTE, ATTRIBUTE_TYPE> {
 }
 
 <ANNOTATION> {
-
-    {ELEMENT_NAME}        { logText(); return ANNOTATION_NAME; }
-    {WHITE_SPACE}         { logText(); yybegin(popState()); return IGNORED; }
-    "("                   { logText(); yybegin(DECORATOR_CONTENT); return new TelosysElementType("("); }
-
-
+    {ELEMENT_NAME}          { logText(); yybegin(POST_DECORATOR_NAME); return ANNOTATION_NAME; }
 }
 
 <TAG> {
+    {ELEMENT_NAME}          { logText(); yybegin(POST_DECORATOR_NAME); return TAG_NAME; }
+}
 
-    {ELEMENT_NAME}        { logText(); return TAG_NAME; }
-    {WHITE_SPACE}         { logText(); return IGNORED; }
-    "("                   { logText(); yybegin(DECORATOR_CONTENT); return new TelosysElementType("("); }
-
+<POST_DECORATOR_NAME> {
+    {WHITE_SPACE}           { logText(); return IGNORED; }
+    "("                     { logText(); yybegin(DECORATOR_CONTENT); return new TelosysElementType("("); }
+    \w|}                    { logText(); yybegin(popState()); yypushback(1); }
 }
 
 <DECORATOR_CONTENT> {
@@ -130,17 +128,13 @@ BLOCK_COMMENT, ENTITY, ENTITY_BODY, ATTRIBUTE, ATTRIBUTE_TYPE> {
 }
 
 <LINE_COMMENT> {
-
     [^\r\n]+                 { logText(); return COMMENT_TEXT; }
     {EOL}                    { logText(); System.out.print("EOL"); yybegin(popState()); return EOL; }
-
 }
 
 <BLOCK_COMMENT> {
-
     [^\*/]+       { logText(); return COMMENT_TEXT; }
     "*/"          { logText(); yybegin(popState()); return new TelosysElementType("*/"); }
-
 }
 
 [^] { System.out.println("BAD CHARACTER"); logText(); return BAD_CHARACTER; }
