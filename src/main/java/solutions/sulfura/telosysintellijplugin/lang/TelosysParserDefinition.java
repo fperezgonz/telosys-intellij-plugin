@@ -21,6 +21,7 @@ public class TelosysParserDefinition implements ParserDefinition {
 
     static IFileElementType INSTANCE = new IFileElementType(TelosysDsl.INSTANCE);
 
+
     @Override
     public @NotNull Lexer createLexer(Project project) {
         return new TelosysLexerAdapter();

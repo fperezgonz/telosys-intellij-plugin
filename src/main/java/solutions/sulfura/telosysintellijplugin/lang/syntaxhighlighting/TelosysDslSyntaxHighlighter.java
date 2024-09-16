@@ -21,8 +21,14 @@ public class TelosysDslSyntaxHighlighter implements SyntaxHighlighter {
             createTextAttributesKey("ANNOTATION", DefaultLanguageHighlighterColors.METADATA);
     public static final TextAttributesKey TAG =
             createTextAttributesKey("TAG", DefaultLanguageHighlighterColors.METADATA);
-    public static final TextAttributesKey DECORATOR_VALUE =
-            createTextAttributesKey("DECORATOR_VALUE", DefaultLanguageHighlighterColors.STRING);
+    public static final TextAttributesKey NAME =
+            createTextAttributesKey("NAME", DefaultLanguageHighlighterColors.CONSTANT);
+    public static final TextAttributesKey NUMBER =
+            createTextAttributesKey("NUMBER", DefaultLanguageHighlighterColors.NUMBER);
+    public static final TextAttributesKey STRING =
+            createTextAttributesKey("STRING", DefaultLanguageHighlighterColors.STRING);
+    public static final TextAttributesKey BOOLEAN =
+            createTextAttributesKey("BOOLEAN", DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey ATTRIBUTE_NAME =
             createTextAttributesKey("ATTRIBUTE_NAME", DefaultLanguageHighlighterColors.INSTANCE_FIELD);
     public static final TextAttributesKey ATTRIBUTE_TYPE =
@@ -35,7 +41,10 @@ public class TelosysDslSyntaxHighlighter implements SyntaxHighlighter {
     private static final TextAttributesKey[] ENTITY_NAME_KEYS = new TextAttributesKey[]{ENTITY_NAME};
     private static final TextAttributesKey[] ANNOTATION_KEYS = new TextAttributesKey[]{ANNOTATION};
     private static final TextAttributesKey[] TAG_KEYS = new TextAttributesKey[]{TAG};
-    private static final TextAttributesKey[] DECORATOR_VALUE_KEYS = new TextAttributesKey[]{DECORATOR_VALUE};
+    private static final TextAttributesKey[] NAME_KEYS = new TextAttributesKey[]{NAME};
+    private static final TextAttributesKey[] NUMBER_KEYS = new TextAttributesKey[]{NUMBER};
+    private static final TextAttributesKey[] STRING_KEYS = new TextAttributesKey[]{STRING};
+    private static final TextAttributesKey[] BOOLEAN_KEYS = new TextAttributesKey[]{BOOLEAN};
     private static final TextAttributesKey[] ATTRIBUTE_NAME_KEYS = new TextAttributesKey[]{ATTRIBUTE_NAME};
     private static final TextAttributesKey[] ATTRIBUTE_TYPE_KEYS = new TextAttributesKey[]{ATTRIBUTE_TYPE};
     private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
@@ -61,8 +70,17 @@ public class TelosysDslSyntaxHighlighter implements SyntaxHighlighter {
         if (tokenType.equals(TelosysTypes.TAG_NAME) || tokenType.equals(TelosysTypes.SHARP)) {
             return TAG_KEYS;
         }
-        if (tokenType.equals(TelosysTypes.DECORATOR_VALUE)) {
-            return DECORATOR_VALUE_KEYS;
+        if (tokenType.equals(TelosysTypes.NAME)) {
+            return NAME_KEYS;
+        }
+        if (tokenType.equals(TelosysTypes.NUMBER)) {
+            return NUMBER_KEYS;
+        }
+        if (tokenType.equals(TelosysTypes.STRING)) {
+            return STRING_KEYS;
+        }
+        if (tokenType.equals(TelosysTypes.BOOLEAN)) {
+            return BOOLEAN_KEYS;
         }
         if (tokenType.equals(TelosysTypes.ATTRIBUTE_TYPE)) {
             return ATTRIBUTE_TYPE_KEYS;

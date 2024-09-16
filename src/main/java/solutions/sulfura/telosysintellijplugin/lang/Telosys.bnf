@@ -22,4 +22,5 @@ decorator ::= annotation | tag
 attribute ::= ATTRIBUTE_NAME IGNORED* ":" IGNORED* ATTRIBUTE_TYPE IGNORED* "{" IGNORED* (decorator IGNORED* )* "}" IGNORED* ";"
 annotation ::= AT ANNOTATION_NAME decorator-content?
 tag ::= SHARP TAG_NAME decorator-content?
-decorator-content ::= "(" IGNORED* DECORATOR_VALUE IGNORED* ( "," IGNORED* DECORATOR_VALUE)* ")"
+decorator-content ::= "(" IGNORED* decorator-parameter IGNORED* ( "," IGNORED* decorator-parameter)* ")"
+decorator-parameter ::= NAME|NUMBER|STRING|BOOLEAN

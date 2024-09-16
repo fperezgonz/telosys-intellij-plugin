@@ -122,7 +122,10 @@ BLOCK_COMMENT, ENTITY, ENTITY_BODY, ATTRIBUTE, ATTRIBUTE_TYPE> {
 
 <DECORATOR_CONTENT> {
     {WHITE_SPACE}           { logText(); return IGNORED; }
-    (\".*\")|(\w+|\.)+      { logText(); return DECORATOR_VALUE; }
+    \d+                     { logText(); return NUMBER; }
+    ("true"|"false")        { logText(); return BOOLEAN; }
+    (\w+|\.)+               { logText(); return NAME; }
+    (\".*\")                { logText(); return STRING; }
     ","                     { logText(); return new TelosysElementType(","); }
     ")"                     { logText(); yybegin(popState()); return new TelosysElementType(")"); }
 }

@@ -22,7 +22,10 @@ public class TelosysColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Attribute type", TelosysDslSyntaxHighlighter.ATTRIBUTE_TYPE),
             new AttributesDescriptor("Annotation", TelosysDslSyntaxHighlighter.ANNOTATION),
             new AttributesDescriptor("Tag", TelosysDslSyntaxHighlighter.TAG),
-            new AttributesDescriptor("Decorator value", TelosysDslSyntaxHighlighter.DECORATOR_VALUE),
+            new AttributesDescriptor("Name", TelosysDslSyntaxHighlighter.NAME),
+            new AttributesDescriptor("Number", TelosysDslSyntaxHighlighter.NUMBER),
+            new AttributesDescriptor("Boolean", TelosysDslSyntaxHighlighter.BOOLEAN),
+            new AttributesDescriptor("String", TelosysDslSyntaxHighlighter.STRING),
             new AttributesDescriptor("Comment", TelosysDslSyntaxHighlighter.COMMENT),
             new AttributesDescriptor("Bad character", TelosysDslSyntaxHighlighter.BAD_CHARACTER)};
 
@@ -39,16 +42,19 @@ public class TelosysColorSettingsPage implements ColorSettingsPage {
     @Override
     public @NonNls @NotNull String getDemoText() {
         return """
-                @DbTable(app_user_aud)
-                @DbSchema(public)
+                
+                @DbTable(app_user_aud)@DbSchema(public)
                 AppUserAud {
+                
                   // attributes
                   userId : long { @Id @GeneratedValue(IDENTITY) @DbName(user_id) };
-                  revtype : short { @GeneratedValue(IDENTITY) #Tag1(revtype) };
-                  rev : int { @GeneratedValue(IDENTITY) @DbName(rev) @DbType(int4) @FK(fklrwde4gab1o0jmxy358bobg55, Revinfo.rev) };
+                  revtype : short { @GeneratedValue(IDENTITY) #Tag1(true) };
+                  rev : int { @GeneratedValue(IDENTITY) @FK(fklrwde4gab1o0jmxy358bobg55, Revinfo.rev) };
                   username : string { @GeneratedValue(IDENTITY) @DbType("varchar(55)") @Size(55) #Tag2 };
+                
                   // links
                   revinfo : Revinfo { @LinkByFK(fklrwde4gab1o0jmxy358bobg55) };
+                
                 }
                 """;
     }
