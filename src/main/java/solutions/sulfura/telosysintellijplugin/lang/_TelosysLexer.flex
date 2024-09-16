@@ -28,7 +28,7 @@ import static solutions.sulfura.telosysintellijplugin.lang.parser.TelosysTypes.*
     }
 
     public void logText(){
-        System.out.println("State: " + yystate() + ", Matched Input: " + yytext());
+        //System.out.println("State: " + yystate() + ", Matched Input: " + yytext());
     }
 %}
 
@@ -132,7 +132,7 @@ BLOCK_COMMENT, ENTITY, ENTITY_BODY, ATTRIBUTE, ATTRIBUTE_TYPE> {
 
 <LINE_COMMENT> {
     [^\r\n]+                 { logText(); return COMMENT_TEXT; }
-    {EOL}                    { logText(); System.out.print("EOL"); yybegin(popState()); return EOL; }
+    {EOL}                    { logText(); yybegin(popState()); return EOL; }
 }
 
 <BLOCK_COMMENT> {
@@ -140,4 +140,4 @@ BLOCK_COMMENT, ENTITY, ENTITY_BODY, ATTRIBUTE, ATTRIBUTE_TYPE> {
     "*/"          { logText(); yybegin(popState()); return new TelosysElementType("*/"); }
 }
 
-[^] { System.out.println("BAD CHARACTER"); logText(); return BAD_CHARACTER; }
+[^] { logText(); return BAD_CHARACTER; }

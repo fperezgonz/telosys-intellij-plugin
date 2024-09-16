@@ -542,7 +542,7 @@ public class _TelosysLexer implements FlexLexer {
     }
 
     public void logText(){
-        System.out.println("State: " + yystate() + ", Matched Input: " + yytext());
+        //System.out.println("State: " + yystate() + ", Matched Input: " + yytext());
     }
 
 
@@ -788,7 +788,7 @@ public class _TelosysLexer implements FlexLexer {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { System.out.println("BAD CHARACTER"); logText(); return BAD_CHARACTER;
+            { logText(); return BAD_CHARACTER;
             }
           // fall through
           case 29: break;
@@ -848,7 +848,7 @@ public class _TelosysLexer implements FlexLexer {
           // fall through
           case 40: break;
           case 13:
-            { logText(); System.out.print("EOL"); yybegin(popState()); return EOL;
+            { logText(); yybegin(popState()); return EOL;
             }
           // fall through
           case 41: break;
