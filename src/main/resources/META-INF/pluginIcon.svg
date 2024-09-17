@@ -1,12 +1,47 @@
-<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M32.0845 7.94025V4H24.0203V7.9896H16.029V4H7.91553V7.94025H4V36H16.0044V32.0045C16.0058 30.9457 16.4274 29.9308 17.1766 29.1826C17.9258 28.4345 18.9412 28.0143 20 28.0143C21.0588 28.0143 22.0743 28.4345 22.8234 29.1826C23.5726 29.9308 23.9942 30.9457 23.9956 32.0045V36H36V7.94025H32.0845Z"
-          fill="url(#paint0_linear)"/>
-    <defs>
-        <linearGradient id="paint0_linear" x1="2.94192" y1="4.89955" x2="37.7772" y2="39.7345"
-                        gradientUnits="userSpaceOnUse">
-            <stop offset="0.15937" stop-color="#3BEA62"/>
-            <stop offset="0.5404" stop-color="#3C99CC"/>
-            <stop offset="0.93739" stop-color="#6B57FF"/>
-        </linearGradient>
-    </defs>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="20mm"
+   height="20mm"
+   viewBox="0 0 20 20"
+   version="1.1"
+   xmlns="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g id="layer1">
+    <path
+       d="M 20,0 V 20 H 0 V 0 Z"
+       style="fill:#f8f8f8;"
+       id="outer_square"/>
+    <rect
+       style="fill:#495d84;"
+       id="inner-square"
+       width="16.5"
+       height="16.5"
+       x="1.75"
+       y="1.75" />
+    <path
+       d="M 10.390772,14.013896 5.2487932,14.807731 5.9450814,9.6581833 Z"
+       id="outer-fire"
+       fill="gold">
+    </path>
+    <path
+       d="M 9.5847425,13.224179 6.3073058,13.73016 6.7511118,10.447899 Z"
+       id="inner-fire"
+       fill="#b46346">
+    </path>
+    <path
+       style="fill:#c6cddb;"
+       d="M 3.5139496,10.866325 15.248531,4.627953 7.8207492,12.189468 Z"
+       id="lighter-side" />
+    <path
+       style="fill:#8b99b3;"
+       d="M 9.220526,16.471974 15.248531,4.6279531 7.8207492,12.189468 Z"
+       id="darker-side" />
+    <path
+       style="fill:#ffffff;"
+       d="M 11.53464,7.6200938 12.789864,7.1308867 12.41801,8.4087104 12.407569,7.5200636 Z"
+       id="cockpit"/>
+  </g>
 </svg>
