@@ -42,6 +42,79 @@ import static solutions.sulfura.telosysintellijplugin.lang.parser.TelosysTypes.*
 EOL = \r|\n
 WHITE_SPACE=\s+
 ELEMENT_NAME=\w+
+ATTRIBUTE_TYPE=(binary
+                | boolean
+                | byte
+                | date
+                | decimal
+                | double
+                | float
+                | int
+                | long
+                | short
+                | string
+                | time
+                | timestamp)
+ANNOTATION_NAME=(Abstract
+               | AggregateRoot
+               | AutoIncremented
+               | Cascade
+               | Context
+               | DbCatalog
+               | DbComment
+               | DbDefaultValue
+               | DbName
+               | DbSchema
+               | DbSize
+               | DbTable
+               | DbTablespace
+               | DbType
+               | DbView
+               | DefaultValue
+               | Domain
+               | Embedded
+               | Extends
+               | FetchTypeEager
+               | FetchTypeLazy
+               | FK
+               | Future
+               | GeneratedValue
+               | Id
+               | InitialValue
+               | InMemoryRepository
+               | InputType
+               | Insertable
+               | JoinEntity
+               | Label
+               | LinkByAttr
+               | LinkByFK
+               | LinkByJoinEntity
+               | LongText
+               | ManyToMany
+               | MappedBy
+               | Max
+               | MaxLen
+               | Min
+               | MinLen
+               | NotBlank
+               | NotEmpty
+               | NotNull
+               | ObjectType
+               | OneToOne
+               | Optional
+               | OrphanRemoval
+               | Package
+               | Past
+               | Pattern
+               | PrimitiveType
+               | ReadOnly
+               | Size
+               | SizeMax
+               | SizeMin
+               | Transient
+               | Unique
+               | UnsignedType
+               | Updatable)
 %state ANNOTATION
 %state TAG
 %state DECORATOR_CONTENT
@@ -50,7 +123,7 @@ ELEMENT_NAME=\w+
 %state ENTITY
 %state ENTITY_BODY
 %state ATTRIBUTE
-%state ATTRIBUTE_TYPE
+%state ATTRIBUTE_METADATA
 %state POST_DECORATOR_NAME
 
 
@@ -63,13 +136,13 @@ ELEMENT_NAME=\w+
 
 }
 
-<YYINITIAL, ATTRIBUTE_TYPE, POST_DECORATOR_NAME> {
+<YYINITIAL, ATTRIBUTE_METADATA, POST_DECORATOR_NAME> {
     "@"                   { logText(); pushCurrentState(); yybegin(ANNOTATION); return AT; }
     "#"                   { logText(); pushCurrentState(); yybegin(TAG); return SHARP; }
 }
 
 <YYINITIAL, ANNOTATION, TAG, DECORATOR_CONTENT, LINE_COMMENT,
-BLOCK_COMMENT, ENTITY, ENTITY_BODY, ATTRIBUTE, ATTRIBUTE_TYPE> {
+BLOCK_COMMENT, ENTITY, ENTITY_BODY, ATTRIBUTE, ATTRIBUTE_METADATA> {
     "//"                  { logText(); pushCurrentState(); yybegin(LINE_COMMENT); return new TelosysElementType("//"); }
     "/\*"                 { logText(); pushCurrentState(); yybegin(BLOCK_COMMENT); return new TelosysElementType("/*"); }
 }
@@ -88,12 +161,13 @@ BLOCK_COMMENT, ENTITY, ENTITY_BODY, ATTRIBUTE, ATTRIBUTE_TYPE> {
         <ATTRIBUTE> {
 
             {WHITE_SPACE}        { logText(); return IGNORED; }
-            ":"                  { logText(); yybegin(ATTRIBUTE_TYPE); return new TelosysElementType(":");}
+            ":"                  { logText(); yybegin(ATTRIBUTE_METADATA); return new TelosysElementType(":");}
 
-            <ATTRIBUTE_TYPE> {
+            <ATTRIBUTE_METADATA> {
 
                 {WHITE_SPACE}        { logText(); return IGNORED; }
-                \w+(\[\])?           { logText(); return TelosysTypes.ATTRIBUTE_TYPE; }
+                {ATTRIBUTE_TYPE}     { logText(); return TelosysTypes.ATTRIBUTE_TYPE; }
+                \w+(\[\])?           { logText(); return TelosysTypes.ENTITY_NAME; }
                 "{"                  { return new TelosysTokenType("{"); }
                 "}"                  { return new TelosysTokenType("}"); }
                 ";"                  { logText(); yybegin(popState()); return new TelosysElementType(";");}
@@ -107,7 +181,7 @@ BLOCK_COMMENT, ENTITY, ENTITY_BODY, ATTRIBUTE, ATTRIBUTE_TYPE> {
 }
 
 <ANNOTATION> {
-    {ELEMENT_NAME}          { logText(); yybegin(POST_DECORATOR_NAME); return ANNOTATION_NAME; }
+    {ANNOTATION_NAME}          { logText(); yybegin(POST_DECORATOR_NAME); return ANNOTATION_NAME; }
 }
 
 <TAG> {

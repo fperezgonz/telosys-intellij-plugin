@@ -56,7 +56,7 @@ public class TelosysParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ATTRIBUTE_NAME IGNORED* ":" IGNORED* ATTRIBUTE_TYPE IGNORED* "{" IGNORED* (decorator IGNORED* )* "}" IGNORED* ";"
+  // ATTRIBUTE_NAME IGNORED* ":" IGNORED* ( ATTRIBUTE_TYPE | ENTITY_NAME ) IGNORED* "{" IGNORED* (decorator IGNORED* )* "}" IGNORED* ";"
   public static boolean attribute(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute")) return false;
     if (!nextTokenIs(b, ATTRIBUTE_NAME)) return false;
@@ -66,7 +66,7 @@ public class TelosysParser implements PsiParser, LightPsiParser {
     r = r && attribute_1(b, l + 1);
     r = r && consumeToken(b, ":");
     r = r && attribute_3(b, l + 1);
-    r = r && consumeToken(b, ATTRIBUTE_TYPE);
+    r = r && attribute_4(b, l + 1);
     r = r && attribute_5(b, l + 1);
     r = r && consumeToken(b, "{");
     r = r && attribute_7(b, l + 1);
@@ -98,6 +98,15 @@ public class TelosysParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(b, "attribute_3", c)) break;
     }
     return true;
+  }
+
+  // ATTRIBUTE_TYPE | ENTITY_NAME
+  private static boolean attribute_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "attribute_4")) return false;
+    boolean r;
+    r = consumeToken(b, ATTRIBUTE_TYPE);
+    if (!r) r = consumeToken(b, ENTITY_NAME);
+    return r;
   }
 
   // IGNORED*

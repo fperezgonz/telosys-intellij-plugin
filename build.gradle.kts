@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "solutions.sulfura"
-version = "1.0-RELEASE"
+version = "1.1-RELEASE"
 
 apply(from = "config/settings.env.gradle.kts")
 
